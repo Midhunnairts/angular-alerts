@@ -1,0 +1,210 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    /* Darker background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    /* Smooth show/hide transition */
+}
+
+.modal {
+    background: white;
+    width: 450px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    /* Increased shadow for better depth */
+    overflow: hidden;
+    transform: scale(0.7);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    /* Modal scale and opacity transitions */
+    opacity: 0;
+}
+
+.modal-header {
+    padding: 20px;
+    background: #007bff;
+    /* Blue header */
+    color: white;
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 20px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #eee;
+}
+
+.close-btn {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #ff3b3b;
+    /* Change color on hover for better UX */
+}
+
+.btn {
+    padding: 10px 20px;
+    background: #28a745;
+    /* Green button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Button shadow */
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    /* Slight lift effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* More pronounced shadow on hover */
+}
+
+/* Open/close modal animations */
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 20px;
+    color: white;
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Common modal body styles */
+.modal-body {
+    padding: 20px;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Success Alert Styles */
+.modal-success .modal-header {
+    background: #28a745;
+    /* Green */
+}
+
+.modal-success .modal-body {
+    background-color: #d4edda;
+    /* Light green background */
+}
+
+/* Error Alert Styles */
+.modal-error .modal-header {
+    background: #dc3545;
+    /* Red */
+}
+
+.modal-error .modal-body {
+    background-color: #f8d7da;
+    /* Light red background */
+}
+
+/* Warning Alert Styles */
+.modal-warning .modal-header {
+    background: #ffc107;
+    /* Yellow */
+}
+
+.modal-warning .modal-body {
+    background-color: #fff3cd;
+    /* Light yellow background */
+}
+
+/* Info Alert Styles */
+.modal-info .modal-header {
+    background: #17a2b8;
+    /* Blue */
+}
+
+.modal-info .modal-body {
+    background-color: #d1ecf1;
+    /* Light blue background */
+}
+
+/* Common modal footer styles */
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #eee;
+}
+
+/* Customizable buttons */
+.btn {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-error {
+    background-color: #dc3545;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}

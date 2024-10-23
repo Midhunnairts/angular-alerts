@@ -1,5 +1,5 @@
 {
-  "name": "modals",
+  "name": "angular-alerts",
   "version": "0.0.12",
   "peerDependencies": {
     "@angular/common": "^18.0.1",

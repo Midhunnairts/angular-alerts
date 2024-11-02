@@ -1,4 +1,4 @@
-.modal-overlay {
+.alert-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -16,7 +16,7 @@
     /* Smooth show/hide transition */
 }
 
-.modal {
+.alert-modal {
     background: white;
     width: 450px;
     border-radius: 12px;
@@ -29,7 +29,7 @@
     opacity: 0;
 }
 
-.modal-header {
+.alert-modal-header {
     padding: 20px;
     background: #007bff;
     /* Blue header */
@@ -40,19 +40,19 @@
     align-items: center;
 }
 
-.modal-body {
+.alert-modal-body {
     padding: 20px;
     font-size: 1rem;
     color: #333;
 }
 
-.modal-footer {
+.alert-modal-footer {
     padding: 15px;
     text-align: right;
     border-top: 1px solid #eee;
 }
 
-.close-btn {
+.alert-close-btn {
     border: none;
     background: none;
     font-size: 1.5rem;
@@ -61,12 +61,12 @@
     transition: color 0.2s;
 }
 
-.close-btn:hover {
+.alert-close-btn:hover {
     color: #ff3b3b;
     /* Change color on hover for better UX */
 }
 
-.btn {
+.alert-btn {
     padding: 10px 20px;
     background: #28a745;
     /* Green button */
@@ -80,7 +80,7 @@
     transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
-.btn:hover {
+.alert-btn:hover {
     background: #218838;
     transform: translateY(-2px);
     /* Slight lift effect */
@@ -89,12 +89,12 @@
 }
 
 /* Open/close modal animations */
-.modal-overlay.show {
+.alert-modal-overlay.show {
     opacity: 1;
     visibility: visible;
 }
 
-.modal.show {
+.alert-modal.show {
     transform: scale(1);
     opacity: 1;
 }
@@ -111,7 +111,7 @@
     }
 }
 
-.modal-header {
+.alert-modal-header {
     padding: 20px;
     color: white;
     font-size: 1.25rem;
@@ -121,65 +121,65 @@
 }
 
 /* Common modal body styles */
-.modal-body {
+.alert-modal-body {
     padding: 20px;
     font-size: 1rem;
     color: #333;
 }
 
 /* Success Alert Styles */
-.modal-success .modal-header {
+.modal-success .alert-modal-header {
     background: #28a745;
     /* Green */
 }
 
-.modal-success .modal-body {
+.modal-success .alert-modal-body {
     background-color: #d4edda;
     /* Light green background */
 }
 
 /* Error Alert Styles */
-.modal-error .modal-header {
+.modal-error .alert-modal-header {
     background: #dc3545;
     /* Red */
 }
 
-.modal-error .modal-body {
+.modal-error .alert-modal-body {
     background-color: #f8d7da;
     /* Light red background */
 }
 
 /* Warning Alert Styles */
-.modal-warning .modal-header {
+.modal-warning .alert-modal-header {
     background: #ffc107;
     /* Yellow */
 }
 
-.modal-warning .modal-body {
+.modal-warning .alert-modal-body {
     background-color: #fff3cd;
     /* Light yellow background */
 }
 
 /* Info Alert Styles */
-.modal-info .modal-header {
+.modal-info .alert-modal-header {
     background: #17a2b8;
     /* Blue */
 }
 
-.modal-info .modal-body {
+.modal-info .alert-modal-body {
     background-color: #d1ecf1;
     /* Light blue background */
 }
 
 /* Common modal footer styles */
-.modal-footer {
+.alert-modal-footer {
     padding: 15px;
     text-align: right;
     border-top: 1px solid #eee;
 }
 
 /* Customizable buttons */
-.btn {
+.alert-btn {
     padding: 10px 20px;
     color: white;
     border: none;
@@ -189,22 +189,22 @@
     transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
-.btn-success {
+.alert-btn-success {
     background-color: #28a745;
 }
 
-.btn-error {
+.alert-btn-error {
     background-color: #dc3545;
 }
 
-.btn-warning {
+.alert-btn-warning {
     background-color: #ffc107;
 }
 
-.btn-info {
+.alert-btn-info {
     background-color: #17a2b8;
 }
 
-.btn:hover {
+.alert-btn:hover {
     transform: translateY(-2px);
 }

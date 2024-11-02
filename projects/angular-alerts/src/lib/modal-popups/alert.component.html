@@ -1,16 +1,16 @@
-<div *ngIf="isVisible" class="modal-overlay">
-  <div [ngClass]="modalClass" class="modal">
-    <div class="modal-header">
+<div *ngIf="isVisible" class="alert-modal-overlay">
+  <div [ngClass]="modalClass" class="alert-modal">
+    <div class="alert-modal-header">
       <h5>{{ modalTitle }}</h5>
-      <button class="close-btn" (click)="closeModal()">×</button>
+      <button class="alert-close-btn" (click)="closeModal()">×</button>
     </div>
-    <div class="modal-body">
+    <div class="alert-modal-body">
       <p>{{ modalMessage }}</p>
     </div>
-    <div class="modal-footer">
+    <div class="alert-modal-footer">
       <button
         [ngClass]="buttonClass"
-        class="btn"
+        class="alert-btn"
         (click)="closeModal()"
       >
         Close

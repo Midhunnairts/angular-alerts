@@ -1,210 +1,80 @@
-.alert-modal-overlay {
+/* src/app/alert/alert.component.scss */
+.alert-backdrop {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    /* Darker background */
+    right: 0;
+    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    /* Smooth show/hide transition */
-}
-
-.alert-modal {
-    background: white;
-    width: 450px;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    /* Increased shadow for better depth */
-    overflow: hidden;
-    transform: scale(0.7);
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-    /* Modal scale and opacity transitions */
-    opacity: 0;
-}
-
-.alert-modal-header {
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100000;
+  }
+  
+  .alert-popup {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     padding: 20px;
-    background: #007bff;
-    /* Blue header */
-    color: white;
-    font-size: 1.25rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.alert-modal-body {
-    padding: 20px;
-    font-size: 1rem;
-    color: #333;
-}
-
-.alert-modal-footer {
-    padding: 15px;
-    text-align: right;
-    border-top: 1px solid #eee;
-}
-
-.alert-close-btn {
-    border: none;
-    background: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: white;
-    transition: color 0.2s;
-}
-
-.alert-close-btn:hover {
-    color: #ff3b3b;
-    /* Change color on hover for better UX */
-}
-
-.alert-btn {
-    padding: 10px 20px;
-    background: #28a745;
-    /* Green button */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Button shadow */
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-
-.alert-btn:hover {
-    background: #218838;
-    transform: translateY(-2px);
-    /* Slight lift effect */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    /* More pronounced shadow on hover */
-}
-
-/* Open/close modal animations */
-.alert-modal-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.alert-modal.show {
-    transform: scale(1);
-    opacity: 1;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10%);
-    }
-
+    text-align: center;
+    transform: scale(0.8);
+    opacity: 0;
+    animation: alertFadeIn 0.3s forwards;
+  }
+  
+  @keyframes alertFadeIn {
     to {
-        opacity: 1;
-        transform: translateY(0);
+      transform: scale(1);
+      opacity: 1;
     }
-}
-
-.alert-modal-header {
-    padding: 20px;
-    color: white;
-    font-size: 1.25rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Common modal body styles */
-.alert-modal-body {
-    padding: 20px;
-    font-size: 1rem;
+  }
+  
+  .alert-icon {
+    font-size: 3em;
+    margin: 10px 0;
+  }
+  
+  .alert-icon.warning { color: orange; }
+  .alert-icon.error { color: red; }
+  .alert-icon.success { color: green; }
+  .alert-icon.info { color: blue; }
+  
+  .alert-title {
+    font-size: 1.5em;
+    margin: 10px 0;
+  }
+  
+  .alert-body {
+    font-size: 1em;
     color: #333;
-}
-
-/* Success Alert Styles */
-.modal-success .alert-modal-header {
-    background: #28a745;
-    /* Green */
-}
-
-.modal-success .alert-modal-body {
-    background-color: #d4edda;
-    /* Light green background */
-}
-
-/* Error Alert Styles */
-.modal-error .alert-modal-header {
-    background: #dc3545;
-    /* Red */
-}
-
-.modal-error .alert-modal-body {
-    background-color: #f8d7da;
-    /* Light red background */
-}
-
-/* Warning Alert Styles */
-.modal-warning .alert-modal-header {
-    background: #ffc107;
-    /* Yellow */
-}
-
-.modal-warning .alert-modal-body {
-    background-color: #fff3cd;
-    /* Light yellow background */
-}
-
-/* Info Alert Styles */
-.modal-info .alert-modal-header {
-    background: #17a2b8;
-    /* Blue */
-}
-
-.modal-info .alert-modal-body {
-    background-color: #d1ecf1;
-    /* Light blue background */
-}
-
-/* Common modal footer styles */
-.alert-modal-footer {
-    padding: 15px;
-    text-align: right;
-    border-top: 1px solid #eee;
-}
-
-/* Customizable buttons */
-.alert-btn {
-    padding: 10px 20px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-
-.alert-btn-success {
-    background-color: #28a745;
-}
-
-.alert-btn-error {
-    background-color: #dc3545;
-}
-
-.alert-btn-warning {
-    background-color: #ffc107;
-}
-
-.alert-btn-info {
-    background-color: #17a2b8;
-}
-
-.alert-btn:hover {
-    transform: translateY(-2px);
-}
+    margin: 10px 0;
+  }
+  
+  .alert-footer {
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 15px;
+  }
+  
+  .alert-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  
+    button {
+      padding: 10px 15px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s ease;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+  

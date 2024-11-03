@@ -1,20 +1,29 @@
-<div *ngIf="isVisible" class="alert-modal-overlay">
-  <div [ngClass]="modalClass" class="alert-modal">
-    <div class="alert-modal-header">
-      <h5>{{ modalTitle }}</h5>
-      <button class="alert-close-btn" (click)="closeModal()">×</button>
+<!-- src/app/alert/alert.component.html -->
+<div *ngIf="alertOptions" class="alert-backdrop" [ngStyle]="{'background': alertOptions.backdrop ? 'rgba(0, 0, 0, 0.5)' : 'transparent'}">
+  <div class="alert-popup"
+       [ngClass]="alertOptions.icon ? 'alert-icon-' + alertOptions.icon : ''"
+       >
+    
+    <!-- Icon and Title -->
+    <div *ngIf="alertOptions.icon" class="alert-icon" [ngClass]="alertOptions.icon" [style.color]="alertOptions.iconColor">
+      <!-- <i [class]="getIconClass(alertOptions.icon)"></i> -->
     </div>
-    <div class="alert-modal-body">
-      <p>{{ modalMessage }}</p>
+    <h2 class="alert-title" [innerHTML]="alertOptions.title"></h2>
+    
+    <!-- Text Content -->
+    <div class="alert-body">
+      <p [innerHTML]="alertOptions.text || alertOptions.html"></p>
     </div>
-    <div class="alert-modal-footer">
-      <button
-        [ngClass]="buttonClass"
-        class="alert-btn"
-        (click)="closeModal()"
-      >
-        Close
-      </button>
+    
+    <!-- Footer Content -->
+    <div *ngIf="alertOptions.footer" class="alert-footer">{{ alertOptions.footer }}</div>
+    
+    <!-- Action Buttons -->
+    <div class="alert-actions">
+      <button *ngIf="alertOptions.showConfirmButton" (click)="confirm()"
+              [style.background]="alertOptions.iconColor">{{ alertOptions.confirmButtonText || 'OK' }}</button>
+      <button *ngIf="alertOptions.showCancelButton" (click)="cancel()"
+              [style.color]="alertOptions.iconColor">{{ alertOptions.cancelButtonText || 'Cancel' }}</button>
     </div>
   </div>
 </div>

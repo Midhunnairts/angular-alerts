@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AlertOptions } from './alert.model';
+import { AlertService } from './alert.service';
 
 @Component({
   selector: 'lib-alert',
@@ -10,52 +12,22 @@ import { Component, Input } from '@angular/core';
     CommonModule
   ]
 })
-export class AlertComponent {
-  isVisible: boolean = false;
-  modalClass: string = '';
-  modalTitle: string = '';
-  modalMessage: string = '';
-  buttonClass: string = '';
+export class AlertComponent implements OnInit{
+  alertOptions: AlertOptions | null = null;
 
-  openModal(type: 'success' | 'error' | 'warning' | 'info') {
-    this.isVisible = true;
-    setTimeout(() => {
-      document.querySelector('.alert-modal')?.classList.add('show');
-      document.querySelector('.alert-modal-overlay')?.classList.add('show');
-    }, 10); // Delay to trigger animation
-    switch (type) {
-      case 'success':
-        this.modalClass = 'modal-success';
-        this.modalTitle = 'Success';
-        this.modalMessage = 'Operation completed successfully!';
-        this.buttonClass = 'alert-btn-success';
-        break;
-      case 'error':
-        this.modalClass = 'modal-error';
-        this.modalTitle = 'Error';
-        this.modalMessage = 'An error occurred. Please try again.';
-        this.buttonClass = 'alert-btn-error';
-        break;
-      case 'warning':
-        this.modalClass = 'modal-warning';
-        this.modalTitle = 'Warning';
-        this.modalMessage = 'Are you sure you want to proceed?';
-        this.buttonClass = 'alert-btn-warning';
-        break;
-      case 'info':
-        this.modalClass = 'modal-info';
-        this.modalTitle = 'Information';
-        this.modalMessage = 'Here is some important information.';
-        this.buttonClass = 'alert-btn-info';
-        break;
-    }
+  constructor(private alertService: AlertService) {}
+
+  ngOnInit(): void {
+    this.alertService.getAlertOptions().subscribe((options) => {
+      this.alertOptions = options;
+    });
   }
 
-  closeModal() {
-    this.isVisible = false;
-    document.querySelector('.alert-modal-overlay')?.classList.remove('show');
-    setTimeout(() => {
-      this.isVisible = false;
-    }, 300);
+  confirm() {
+    this.alertService.closeAlert();
+  }
+
+  cancel() {
+    this.alertService.closeAlert();
   }
 }

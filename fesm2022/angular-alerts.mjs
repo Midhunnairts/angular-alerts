@@ -1,7 +1,8 @@
-import * as i1 from '@angular/common';
+import * as i2 from '@angular/common';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import * as i0 from '@angular/core';
-import { Directive, Inject, Input, HostListener, Component, NgModule } from '@angular/core';
+import { Directive, Inject, Input, HostListener, Injectable, Component, NgModule } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 class TooltipDirective {
     constructor(renderer, document) {
@@ -137,81 +138,65 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
                 args: ['click']
             }] } });
 
-class AlertComponent {
+// src/app/alert.service.ts
+class AlertService {
     constructor() {
-        this.isVisible = false;
-        this.modalClass = '';
-        this.modalTitle = '';
-        this.modalMessage = '';
-        this.buttonClass = '';
+        this.alertOptions$ = new BehaviorSubject(null);
     }
-    openModal(type) {
-        this.isVisible = true;
-        setTimeout(() => {
-            document.querySelector('.modal')?.classList.add('show');
-            document.querySelector('.modal-overlay')?.classList.add('show');
-        }, 10); // Delay to trigger animation
-        switch (type) {
-            case 'success':
-                this.modalClass = 'modal-success';
-                this.modalTitle = 'Success';
-                this.modalMessage = 'Operation completed successfully!';
-                this.buttonClass = 'btn-success';
-                break;
-            case 'error':
-                this.modalClass = 'modal-error';
-                this.modalTitle = 'Error';
-                this.modalMessage = 'An error occurred. Please try again.';
-                this.buttonClass = 'btn-error';
-                break;
-            case 'warning':
-                this.modalClass = 'modal-warning';
-                this.modalTitle = 'Warning';
-                this.modalMessage = 'Are you sure you want to proceed?';
-                this.buttonClass = 'btn-warning';
-                break;
-            case 'info':
-                this.modalClass = 'modal-info';
-                this.modalTitle = 'Information';
-                this.modalMessage = 'Here is some important information.';
-                this.buttonClass = 'btn-info';
-                break;
-        }
+    showAlert(options) {
+        this.alertOptions$.next(options);
     }
-    closeModal() {
-        this.isVisible = false;
-        document.querySelector('.modal-overlay')?.classList.remove('show');
-        setTimeout(() => {
-            this.isVisible = false;
-        }, 300);
+    closeAlert() {
+        this.alertOptions$.next(null);
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertComponent, deps: [], target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.8", type: AlertComponent, isStandalone: true, selector: "lib-alert", ngImport: i0, template: "<div *ngIf=\"isVisible\" class=\"modal-overlay\">\n  <div [ngClass]=\"modalClass\" class=\"modal\">\n    <div class=\"modal-header\">\n      <h5>{{ modalTitle }}</h5>\n      <button class=\"close-btn\" (click)=\"closeModal()\">\u00D7</button>\n    </div>\n    <div class=\"modal-body\">\n      <p>{{ modalMessage }}</p>\n    </div>\n    <div class=\"modal-footer\">\n      <button\n        [ngClass]=\"buttonClass\"\n        class=\"btn\"\n        (click)=\"closeModal()\"\n      >\n        Close\n      </button>\n    </div>\n  </div>\n</div>\n", styles: [".modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#000000b3;display:flex;justify-content:center;align-items:center;z-index:1000;opacity:0;visibility:hidden;transition:opacity .3s ease-in-out,visibility .3s ease-in-out}.modal{background:#fff;width:450px;border-radius:12px;box-shadow:0 8px 30px #0000004d;overflow:hidden;transform:scale(.7);transition:transform .3s ease-out,opacity .3s ease-out;opacity:0}.modal-header{padding:20px;background:#007bff;color:#fff;font-size:1.25rem;display:flex;justify-content:space-between;align-items:center}.close-btn{border:none;background:none;font-size:1.5rem;cursor:pointer;color:#fff;transition:color .2s}.close-btn:hover{color:#ff3b3b}.btn{padding:10px 20px;background:#28a745;color:#fff;border:none;border-radius:5px;font-size:1rem;cursor:pointer;box-shadow:0 4px 6px #0000001a;transition:background .2s,transform .2s,box-shadow .2s}.btn:hover{background:#218838;transform:translateY(-2px);box-shadow:0 6px 12px #0003}.modal-overlay.show{opacity:1;visibility:visible}.modal.show{transform:scale(1);opacity:1}@keyframes fadeIn{0%{opacity:0;transform:translateY(-10%)}to{opacity:1;transform:translateY(0)}}.modal-header{padding:20px;color:#fff;font-size:1.25rem;display:flex;justify-content:space-between;align-items:center}.modal-body{padding:20px;font-size:1rem;color:#333}.modal-success .modal-header{background:#28a745}.modal-success .modal-body{background-color:#d4edda}.modal-error .modal-header{background:#dc3545}.modal-error .modal-body{background-color:#f8d7da}.modal-warning .modal-header{background:#ffc107}.modal-warning .modal-body{background-color:#fff3cd}.modal-info .modal-header{background:#17a2b8}.modal-info .modal-body{background-color:#d1ecf1}.modal-footer{padding:15px;text-align:right;border-top:1px solid #eee}.btn{padding:10px 20px;color:#fff;border:none;border-radius:5px;font-size:1rem;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s}.btn-success{background-color:#28a745}.btn-error{background-color:#dc3545}.btn-warning{background-color:#ffc107}.btn-info{background-color:#17a2b8}.btn:hover{transform:translateY(-2px)}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }] }); }
+    getAlertOptions() {
+        return this.alertOptions$.asObservable();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertService, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }] });
+
+class AlertComponent {
+    constructor(alertService) {
+        this.alertService = alertService;
+        this.alertOptions = null;
+    }
+    ngOnInit() {
+        this.alertService.getAlertOptions().subscribe((options) => {
+            this.alertOptions = options;
+        });
+    }
+    confirm() {
+        this.alertService.closeAlert();
+    }
+    cancel() {
+        this.alertService.closeAlert();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertComponent, deps: [{ token: AlertService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "18.2.8", type: AlertComponent, isStandalone: true, selector: "lib-alert", ngImport: i0, template: "<!-- src/app/alert/alert.component.html -->\n<div *ngIf=\"alertOptions\" class=\"alert-backdrop\" [ngStyle]=\"{'background': alertOptions.backdrop ? 'rgba(0, 0, 0, 0.5)' : 'transparent'}\">\n  <div class=\"alert-popup\"\n       [ngClass]=\"alertOptions.icon ? 'alert-icon-' + alertOptions.icon : ''\"\n       >\n    \n    <!-- Icon and Title -->\n    <div *ngIf=\"alertOptions.icon\" class=\"alert-icon\" [ngClass]=\"alertOptions.icon\" [style.color]=\"alertOptions.iconColor\">\n      <!-- <i [class]=\"getIconClass(alertOptions.icon)\"></i> -->\n    </div>\n    <h2 class=\"alert-title\" [innerHTML]=\"alertOptions.title\"></h2>\n    \n    <!-- Text Content -->\n    <div class=\"alert-body\">\n      <p [innerHTML]=\"alertOptions.text || alertOptions.html\"></p>\n    </div>\n    \n    <!-- Footer Content -->\n    <div *ngIf=\"alertOptions.footer\" class=\"alert-footer\">{{ alertOptions.footer }}</div>\n    \n    <!-- Action Buttons -->\n    <div class=\"alert-actions\">\n      <button *ngIf=\"alertOptions.showConfirmButton\" (click)=\"confirm()\"\n              [style.background]=\"alertOptions.iconColor\">{{ alertOptions.confirmButtonText || 'OK' }}</button>\n      <button *ngIf=\"alertOptions.showCancelButton\" (click)=\"cancel()\"\n              [style.color]=\"alertOptions.iconColor\">{{ alertOptions.cancelButtonText || 'Cancel' }}</button>\n    </div>\n  </div>\n</div>\n", styles: [".alert-backdrop{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#00000080;z-index:100000}.alert-popup{width:100%;max-width:400px;background:#fff;border-radius:10px;box-shadow:0 4px 10px #0000004d;padding:20px;text-align:center;transform:scale(.8);opacity:0;animation:alertFadeIn .3s forwards}@keyframes alertFadeIn{to{transform:scale(1);opacity:1}}.alert-icon{font-size:3em;margin:10px 0}.alert-icon.warning{color:orange}.alert-icon.error{color:red}.alert-icon.success{color:green}.alert-icon.info{color:#00f}.alert-title{font-size:1.5em;margin:10px 0}.alert-body{font-size:1em;color:#333;margin:10px 0}.alert-footer{font-size:.9em;color:#888;margin-top:15px}.alert-actions{display:flex;justify-content:center;margin-top:20px}.alert-actions button{padding:10px 15px;margin:0 5px;border:none;border-radius:5px;cursor:pointer;font-size:1em;transition:background .3s ease}.alert-actions button:hover{opacity:.9}\n"], dependencies: [{ kind: "ngmodule", type: CommonModule }, { kind: "directive", type: i2.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i2.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i2.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertComponent, decorators: [{
             type: Component,
             args: [{ selector: 'lib-alert', standalone: true, imports: [
                         CommonModule
-                    ], template: "<div *ngIf=\"isVisible\" class=\"modal-overlay\">\n  <div [ngClass]=\"modalClass\" class=\"modal\">\n    <div class=\"modal-header\">\n      <h5>{{ modalTitle }}</h5>\n      <button class=\"close-btn\" (click)=\"closeModal()\">\u00D7</button>\n    </div>\n    <div class=\"modal-body\">\n      <p>{{ modalMessage }}</p>\n    </div>\n    <div class=\"modal-footer\">\n      <button\n        [ngClass]=\"buttonClass\"\n        class=\"btn\"\n        (click)=\"closeModal()\"\n      >\n        Close\n      </button>\n    </div>\n  </div>\n</div>\n", styles: [".modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#000000b3;display:flex;justify-content:center;align-items:center;z-index:1000;opacity:0;visibility:hidden;transition:opacity .3s ease-in-out,visibility .3s ease-in-out}.modal{background:#fff;width:450px;border-radius:12px;box-shadow:0 8px 30px #0000004d;overflow:hidden;transform:scale(.7);transition:transform .3s ease-out,opacity .3s ease-out;opacity:0}.modal-header{padding:20px;background:#007bff;color:#fff;font-size:1.25rem;display:flex;justify-content:space-between;align-items:center}.close-btn{border:none;background:none;font-size:1.5rem;cursor:pointer;color:#fff;transition:color .2s}.close-btn:hover{color:#ff3b3b}.btn{padding:10px 20px;background:#28a745;color:#fff;border:none;border-radius:5px;font-size:1rem;cursor:pointer;box-shadow:0 4px 6px #0000001a;transition:background .2s,transform .2s,box-shadow .2s}.btn:hover{background:#218838;transform:translateY(-2px);box-shadow:0 6px 12px #0003}.modal-overlay.show{opacity:1;visibility:visible}.modal.show{transform:scale(1);opacity:1}@keyframes fadeIn{0%{opacity:0;transform:translateY(-10%)}to{opacity:1;transform:translateY(0)}}.modal-header{padding:20px;color:#fff;font-size:1.25rem;display:flex;justify-content:space-between;align-items:center}.modal-body{padding:20px;font-size:1rem;color:#333}.modal-success .modal-header{background:#28a745}.modal-success .modal-body{background-color:#d4edda}.modal-error .modal-header{background:#dc3545}.modal-error .modal-body{background-color:#f8d7da}.modal-warning .modal-header{background:#ffc107}.modal-warning .modal-body{background-color:#fff3cd}.modal-info .modal-header{background:#17a2b8}.modal-info .modal-body{background-color:#d1ecf1}.modal-footer{padding:15px;text-align:right;border-top:1px solid #eee}.btn{padding:10px 20px;color:#fff;border:none;border-radius:5px;font-size:1rem;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s}.btn-success{background-color:#28a745}.btn-error{background-color:#dc3545}.btn-warning{background-color:#ffc107}.btn-info{background-color:#17a2b8}.btn:hover{transform:translateY(-2px)}\n"] }]
-        }] });
+                    ], template: "<!-- src/app/alert/alert.component.html -->\n<div *ngIf=\"alertOptions\" class=\"alert-backdrop\" [ngStyle]=\"{'background': alertOptions.backdrop ? 'rgba(0, 0, 0, 0.5)' : 'transparent'}\">\n  <div class=\"alert-popup\"\n       [ngClass]=\"alertOptions.icon ? 'alert-icon-' + alertOptions.icon : ''\"\n       >\n    \n    <!-- Icon and Title -->\n    <div *ngIf=\"alertOptions.icon\" class=\"alert-icon\" [ngClass]=\"alertOptions.icon\" [style.color]=\"alertOptions.iconColor\">\n      <!-- <i [class]=\"getIconClass(alertOptions.icon)\"></i> -->\n    </div>\n    <h2 class=\"alert-title\" [innerHTML]=\"alertOptions.title\"></h2>\n    \n    <!-- Text Content -->\n    <div class=\"alert-body\">\n      <p [innerHTML]=\"alertOptions.text || alertOptions.html\"></p>\n    </div>\n    \n    <!-- Footer Content -->\n    <div *ngIf=\"alertOptions.footer\" class=\"alert-footer\">{{ alertOptions.footer }}</div>\n    \n    <!-- Action Buttons -->\n    <div class=\"alert-actions\">\n      <button *ngIf=\"alertOptions.showConfirmButton\" (click)=\"confirm()\"\n              [style.background]=\"alertOptions.iconColor\">{{ alertOptions.confirmButtonText || 'OK' }}</button>\n      <button *ngIf=\"alertOptions.showCancelButton\" (click)=\"cancel()\"\n              [style.color]=\"alertOptions.iconColor\">{{ alertOptions.cancelButtonText || 'Cancel' }}</button>\n    </div>\n  </div>\n</div>\n", styles: [".alert-backdrop{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#00000080;z-index:100000}.alert-popup{width:100%;max-width:400px;background:#fff;border-radius:10px;box-shadow:0 4px 10px #0000004d;padding:20px;text-align:center;transform:scale(.8);opacity:0;animation:alertFadeIn .3s forwards}@keyframes alertFadeIn{to{transform:scale(1);opacity:1}}.alert-icon{font-size:3em;margin:10px 0}.alert-icon.warning{color:orange}.alert-icon.error{color:red}.alert-icon.success{color:green}.alert-icon.info{color:#00f}.alert-title{font-size:1.5em;margin:10px 0}.alert-body{font-size:1em;color:#333;margin:10px 0}.alert-footer{font-size:.9em;color:#888;margin-top:15px}.alert-actions{display:flex;justify-content:center;margin-top:20px}.alert-actions button{padding:10px 15px;margin:0 5px;border:none;border-radius:5px;cursor:pointer;font-size:1em;transition:background .3s ease}.alert-actions button:hover{opacity:.9}\n"] }]
+        }], ctorParameters: () => [{ type: AlertService }] });
 
 class AlertPopupModule {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertPopupModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.8", ngImport: i0, type: AlertPopupModule, imports: [
-            // CommonModule,
-            AlertComponent], exports: [AlertComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertPopupModule, imports: [
-            // CommonModule,
-            AlertComponent] }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.8", ngImport: i0, type: AlertPopupModule, imports: [AlertComponent], exports: [AlertComponent] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertPopupModule, imports: [AlertComponent] }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImport: i0, type: AlertPopupModule, decorators: [{
             type: NgModule,
             args: [{
-                    //   declarations: [
-                    //     AlertComponent
-                    //   ],
                     imports: [
-                        // CommonModule,
                         AlertComponent
                     ],
                     exports: [AlertComponent],
@@ -227,5 +212,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.8", ngImpor
  * Generated bundle index. Do not edit.
  */
 
-export { AlertComponent, AlertPopupModule, TooltipDirective };
+export { AlertComponent, AlertPopupModule, AlertService, TooltipDirective };
 //# sourceMappingURL=angular-alerts.mjs.map

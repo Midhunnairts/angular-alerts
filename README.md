@@ -1,27 +1,129 @@
-# SuperPackage
+Angular Alert Library
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+A customizable alert library for Angular. This library enables you to create clean, responsive, and customizable alert popups for different alert types, including success, error, warning, and information.
 
-## Development server
+Features
+Customizable Icons: Choose from success, warning, error, or information icons.
+Customizable Colors: Set colors for icons and buttons.
+Animated Alerts: Supports smooth entry animations.
+Backdrop Support: Display alerts with or without a backdrop.
+Responsive Design: Alerts adjust seamlessly across screen sizes.
+Confirmation and Cancel Buttons: Customize button text and behavior.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Table of Contents
+Installation
+Usage
+Options
+Customization
+Examples
 
-## Code scaffolding
+Installation
+Install this repository in your Angular project:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+npm i "https://github.com/Midhunnairts/angular-alerts#release/live"
 
-## Build
+Add the Component to your Angular project:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Add AlertComponent to your application module.
 
-## Running unit tests
+import { AlertComponent } from 'angular-alerts'
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+@NgModule({
+  imports: [AlertComponent],
+  ...
+})
+export class AppModule { }
 
-## Running end-to-end tests
+Include in Your HTML:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Place the <lib-alert> component in your main AppComponent template (e.g., app.component.html).
 
-## Further help
+<lib-alert></lib-alert>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Usage
+Inject AlertService into your component and use showAlert to display the alert popup.
+
+import { Component } from '@angular/core';
+import { AlertService } from 'angular-alerts';
+
+@Component({
+  selector: 'app-sample',
+  templateUrl: './sample.component.html'
+})
+export class SampleComponent {
+  constructor(private alertService: AlertService) {}
+
+  showAlert() {
+    this.alertService.showAlert({
+      title: 'Alert Title',
+      text: 'This is an example alert message.',
+      icon: 'success',
+      iconColor: '#4CAF50',
+      showConfirmButton: true,
+      confirmButtonText: 'OK',
+      showCancelButton: false,
+      animation: true
+    });
+  }
+}
+
+Options
+Below are the configurable options for creating alerts:
+
+Option	Type	Default	Description
+title	string	''	Title of the alert
+text	string	''	Message text within the alert
+icon	string	''	Icon type, accepts success, error, warning, info
+iconColor	string	#4CAF50	Custom color for the icon
+showConfirmButton	boolean	true	Display confirm button
+confirmButtonText	string	'OK'	Text for the confirm button
+showCancelButton	boolean	false	Display cancel button
+cancelButtonText	string	'Cancel'	Text for the cancel button
+animation	boolean	true	Enables smooth pop-up animation
+backdrop	boolean	true	Shows background overlay; set false for no backdrop
+Customization
+To adjust the alert appearance, you can override the default SCSS styling in your global styles file.
+
+Example SCSS Customizations
+Modify Button Colors: Update the background color of the confirm button.
+
+.alert-actions button.confirm-button {
+  background-color: #28a745;
+}
+
+Icon Style Customization: Customize icon colors and size.
+
+.alert-icon.success {
+  color: #4CAF50;
+  font-size: 3em;
+}
+
+Examples
+Basic Success Alert:
+
+this.alertService.showAlert({
+  title: 'Success!',
+  text: 'Your operation was successful!',
+  icon: 'success',
+  iconColor: 'green',
+  showConfirmButton: true,
+  confirmButtonText: 'Great!'
+});
+
+Warning Alert with Cancel Button:
+
+typescript
+Copy code
+this.alertService.showAlert({
+  title: 'Warning!',
+  text: 'This action may have consequences.',
+  icon: 'warning',
+  iconColor: 'orange',
+  showConfirmButton: true,
+  confirmButtonText: 'Proceed',
+  showCancelButton: true,
+  cancelButtonText: 'Cancel'
+});
+
+License
+This library is open-source and available for personal and commercial use.
